@@ -1,7 +1,7 @@
-import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
+import { createContext, PropsWithChildren, useContext, useState } from "react";
 import localStorageService from "../services/storage/local-storage";
 
-type UserType = {
+export type UserType = {
   id: string;
   firstName: string;
   lastName: string;
@@ -9,15 +9,10 @@ type UserType = {
   token: string;
 }
 
-type CredsType = {
-  username: string;
-  password: string;
-}
-
 type AuthContextType = {
-  user: UserType | undefined;
+  user: UserType | null;
   isAuthenticated: boolean;
-  onSignIn: (creds: CredsType) => void;
+  onSignIn: (user: UserType) => void;
   onSignOut: () => void;
 }
 
@@ -32,24 +27,19 @@ export const useAuth = () => {
 };
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [user, setUser] = useState<UserType | undefined>(undefined);
+  const [user, setUser] = useState<UserType | null>(null);
   const [isAuthenticated, setAuthenticationStatus] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (user) {
-      setAuthenticationStatus(!isAuthenticated);
-      localStorageService.setItem('access_token', user.token);
-    }
-  }, [user]);
-
-  const onSignIn = async (creds: CredsType) => {
-    console.log(creds);
-    //setUser(); //TODO: Here we'll set user data from API
+  const onSignIn = (user: UserType) => {
+    setUser(user);
+    setAuthenticationStatus(!isAuthenticated);
+    localStorageService.setItem('access_token', user.token);
   };
 
   const onSignOut = () => {
-    setUser(undefined);
+    setUser(null);
     setAuthenticationStatus(!isAuthenticated);
+    localStorageService.setItem('access_token', null);
   }
 
   const value: AuthContextType = {

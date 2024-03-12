@@ -1,5 +1,5 @@
 interface LocalStorageService {
-  setItem: (key: string, value: string) => void;
+  setItem: (key: string, value: string | null) => void;
   getItem: (key: string) => string | null;
   removeItem: (key: string) => void;
 }

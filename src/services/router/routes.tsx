@@ -1,4 +1,17 @@
-import { ProtectedRoute } from "./protected-route";
+import { Navigate, Outlet } from "react-router-dom";
+import SignIn from "../../pages/auth/sign-in";
+import { useAuth } from "../../providers/auth-provider";
+
+const ProtectedRoute = () => {
+  const { isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+
+  return <Outlet />;
+};
+
 
 export const routesForPublic = [
   {
@@ -39,7 +52,7 @@ export const routesForNotAuthenticatedOnly = [
   },
   {
     path: "/login",
-    element: <h1>Login page</h1>,
+    element: <SignIn />,
   },
 ];
 

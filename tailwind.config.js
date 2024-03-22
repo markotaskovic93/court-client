@@ -14,6 +14,9 @@ export default {
         '3xl': '1.953rem',
         '4xl': '2.441rem',
         '5xl': '3.052rem',
+      },
+      colors: {
+        "red": "#ff0000",
       }
     },
     screens: {
@@ -33,6 +36,11 @@ export default {
       // => @media (min-width: 1400px) { ... }
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addVariant }) {
+      addVariant('child', '&_*');
+      addVariant('child-hover', '& > *:hover');
+    }
+  ],
 }
 

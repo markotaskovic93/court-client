@@ -10,7 +10,7 @@ const LangSwitcher: React.FC<ILangSwitcher> = ({
 }) => {
   const { language, changeLanguage } = useTranslation();
 
-  const options = languages.map(lang => <option value={lang}>{ lang }</option>)
+  const options = languages.map(lang => <option value={lang} key={lang}>{ lang }</option>)
 
   return (
     <select className={className} defaultValue={language} onChange={(e) => changeLanguage(e.target.value)}>

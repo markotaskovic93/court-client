@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import SignIn from "../../pages/auth/sign-in";
+import ProductsPage from "../../pages/product";
 import { useAuth } from "../../providers/auth-provider";
 
 const ProtectedRoute = () => {
@@ -21,6 +22,10 @@ export const routesForPublic = [
   {
     path: "/about-us",
     element: <div>About Us</div>,
+  },
+  {
+    path: "/products",
+    element: <ProductsPage />,
   },
 ];
 
